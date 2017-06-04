@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="thousandeyes/src/main/java"/>
+	<classpathentry kind="src" path="thousandeyes/src/test/java"/>
+	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/javax.annotation.jar"/>
+	<classpathentry kind="lib" path="lib/javax.ejb.jar"/>
+	<classpathentry kind="lib" path="lib/javax.jms.jar"/>
+	<classpathentry kind="lib" path="lib/javax.persistence.jar"/>
+	<classpathentry kind="lib" path="lib/javax.resource.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet.jsp.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet.jsp.jstl.jar"/>
+	<classpathentry kind="lib" path="lib/javax.transaction.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aop-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aspects-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-support-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-expression-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-instrument-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-instrument-tomcat-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-jdbc-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-jms-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-messaging-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-orm-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-oxm-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-test-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-tx-4.3.8.RELEASE.jar"/>
+	<classpathentry kind="lib" path="thousandeyes/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="thousandeyes/target/classes"/>
+</classpath>
