@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
+ * Class for Basic Authentication of the user.
  * Created by Revanth on 6/2/2017.
  */
 @Component
