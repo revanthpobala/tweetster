@@ -83,6 +83,10 @@ public class PersonController {
     public ResponseEntity<?> startFollowingAPerson(@AuthenticationPrincipal final Person p, @RequestParam(value = "personToBeFollowed") String personToBeFollowed) {
         Status status = new Status();
         try {
+            if (p.getHandle().equals(personToBeFollowed)) {
+                status.setMessage("You cannot follow yourself");
+                status.setStatus("Failure");
+            }
             boolean result = personService.followAPerson(p.getId(), personService.getPersonByHandle(personToBeFollowed).getId());
             if (result) {
                 status.setMessage("Successfully Followed");
@@ -108,6 +112,10 @@ public class PersonController {
     public ResponseEntity<?> startUnFollowAPerson(@AuthenticationPrincipal final Person p, @RequestParam(value = "personToBeUnFollowed") String personToBeUnfollowed) {
         Status status = new Status();
         try {
+            if (p.getHandle().equals(personToBeUnfollowed)) {
+                status.setMessage("You cannot unfollow yourself");
+                status.setStatus("Failure");
+            }
             boolean result = personService.followAPerson(p.getId(), personService.getPersonByHandle(personToBeUnfollowed).getId());
             if (result) {
                 status.setMessage("Successfully Unfollowed");

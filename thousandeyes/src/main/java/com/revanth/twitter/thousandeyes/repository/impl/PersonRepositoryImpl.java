@@ -27,7 +27,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     private static final String FIND_PERSON_BY_HANDLE = "SELECT * FROM PEOPLE where handle = '";
     private static final String FIND_PERSON_BY_NAME = "SELECT * FROM PEOPLE where name = '";
-    private static final String FOLLOW_A_PERSON = "insert into followers (person_id, follower_person_id) values ( ";
+    private static final String FOLLOW_A_PERSON = "INSERT INTO followers (person_id, follower_person_id) VALUES (:person_id, :follower_person_id)";
     private static final String GET_ALL_PERSONS_SQL = "SELECT * FROM people";
     private static final String GET_FOLLOWEES_OF_A_PERSON = "select p.* from people p join followers f on p.id = f.person_id where f.follower_person_id = ";
     private static final String GET_FOLLOWERS_OF_A_PERSON = "select p.* from PEOPLE p join FOLLOWERS f on p.id = f.follower_person_id where f.person_id = ";
@@ -141,16 +141,13 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Override
     public boolean followPerson(Person currentPerson, Person personToFollow) throws CustomException {
         try {
-            if (currentPerson.getId() == personToFollow.getId()) {
-                throw new CustomException("Cannot follow yourself");
-            }
             if (isFollowing(currentPerson, personToFollow)) {
                 return false;
             }
             HashMap<String, Integer> sqlParameters = new HashMap<>();
-            sqlParameters.put("currentPerson", currentPerson.getId());
-            sqlParameters.put("personToFollow", personToFollow.getId());
-            return db.update(FOLLOW_A_PERSON + " :currentPerson , :personToFollow)", sqlParameters) == 1;
+            sqlParameters.put("person_id", currentPerson.getId());
+            sqlParameters.put("follower_person_id", personToFollow.getId());
+            return db.update(FOLLOW_A_PERSON, sqlParameters) == 1;
         } catch (DataAccessException exception) {
             throw new CustomException(exception.getMessage());
         }

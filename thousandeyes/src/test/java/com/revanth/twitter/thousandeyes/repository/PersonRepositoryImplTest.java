@@ -1,7 +1,6 @@
 package com.revanth.twitter.thousandeyes.repository;
 
 import com.revanth.twitter.thousandeyes.entity.Person;
-import com.revanth.twitter.thousandeyes.exception.CustomException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -109,17 +108,6 @@ public class PersonRepositoryImplTest {
         when(mockPerson1.getId()).thenReturn(2);
         when(mockPerson2.getId()).thenReturn(3);
         assertTrue(personRepository.followPerson(mockPerson1, mockPerson2));
-    }
-
-    /**
-     * Query return true if the query executed.
-     *
-     * @throws Exception
-     */
-    @Test(expected = CustomException.class)
-    public void testFollowPersonSelfFollowScenario() throws Exception {
-        when(mockPerson1.getId()).thenReturn(3);
-        personRepository.followPerson(mockPerson1, mockPerson1);
     }
 
 
