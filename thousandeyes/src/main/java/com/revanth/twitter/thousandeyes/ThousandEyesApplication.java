@@ -15,6 +15,7 @@ public class ThousandEyesApplication {
      *
      * @param args
      */
+
     public static void main(String[] args) {
         SpringApplication.run(ThousandEyesApplication.class, args);
     }
