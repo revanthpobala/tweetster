@@ -76,14 +76,15 @@ public class PersonController {
      * Follow a person.
      *
      * @param p                    The current person
-     * @param personToBeFollowedId The person whom he have to follow.
+     * @param personToBeFollowed The person whom he have to follow.
      * @return Status of the operation
      */
     @RequestMapping(value = "/followPerson", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<?> startFollowingAPerson(@AuthenticationPrincipal final Person p, @RequestParam(value = "personToBeFollowed") int personToBeFollowedId) {
+    public ResponseEntity<?> startFollowingAPerson(@AuthenticationPrincipal final Person p, @RequestParam(value = "personToBeFollowed") String personToBeFollowed) {
         Status status = new Status();
         try {
-            if (personService.followAPerson(p.getId(), personToBeFollowedId)) {
+            boolean result = personService.followAPerson(p.getId(), personService.getPersonByHandle(personToBeFollowed).getId());
+            if (result) {
                 status.setMessage("Successfully Followed");
                 status.setStatus("Success");
             } else {
@@ -100,14 +101,15 @@ public class PersonController {
      * Unfollow a person
      *
      * @param p                      The Current person
-     * @param personToBeUnfollowedId Person whom we have to un follow.
+     * @param personToBeUnfollowed Person whom we have to un follow.
      * @return Status of the Operation.
      */
     @RequestMapping(value = "/unfollowPerson", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<?> startUnFollowAPerson(@AuthenticationPrincipal final Person p, @RequestParam(value = "personToBeUnFollowed") int personToBeUnfollowedId) {
+    public ResponseEntity<?> startUnFollowAPerson(@AuthenticationPrincipal final Person p, @RequestParam(value = "personToBeUnFollowed") String personToBeUnfollowed) {
         Status status = new Status();
         try {
-            if (personService.unFollowAPerson(p.getId(), personToBeUnfollowedId)) {
+            boolean result = personService.followAPerson(p.getId(), personService.getPersonByHandle(personToBeUnfollowed).getId());
+            if (result) {
                 status.setMessage("Successfully Unfollowed");
                 status.setStatus("Success");
             } else {
@@ -146,7 +148,7 @@ public class PersonController {
      * @return The distance between two persons.
      */
     @RequestMapping(value = "/shortestDistance", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> getShortestDistanceBetweenTwoUsers(@RequestParam(value = "source") int source, @RequestParam(value = "destination") int destination) {
+    public ResponseEntity<?> getShortestDistanceBetweenTwoUsers(@RequestParam(value = "source") String source, @RequestParam(value = "destination") String destination) {
         JSONObject distanceObj = new JSONObject();
         String numberOfHops = "";
         try {

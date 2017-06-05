@@ -34,7 +34,7 @@ public class TweetControllerTest {
      */
     @Test
     public void testGetAllTweetsOfUsersSuccessScenario() throws Exception {
-        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("3", "3").
+        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("catwoman", "catwoman").
                 getForObject("/tweet/searchForMessages?search=Cats", List.class);
         assertThat(result.get(0).get("personId"), is(3));
         assertTrue(result.get(0).get("content").toString().contains("Cats"));
@@ -49,7 +49,7 @@ public class TweetControllerTest {
     public void createANewTweet() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.set("content", "Hi this is a new tweet");
-        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("9", "9").
+        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("ironman", "ironman").
                 postForEntity("/tweet/create", params, Object.class);
         assertEquals(200, 200);
         HashMap<String, String> status = new LinkedHashMap<>();

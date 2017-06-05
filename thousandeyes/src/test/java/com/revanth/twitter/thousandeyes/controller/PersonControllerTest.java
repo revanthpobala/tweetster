@@ -45,7 +45,7 @@ public class PersonControllerTest {
      */
     @Test
     public void testGetFollowersOfUserSuccessScenario() throws Exception {
-        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("1", "1")
+        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("batman", "batman")
                 .getForObject("/user/followers", List.class);
         assertEquals(6, result.size());
         assertEquals(10, result.get(0).get("id"));
@@ -58,7 +58,7 @@ public class PersonControllerTest {
      */
     @Test
     public void testGetUserFollowingSuccessScenario() throws Exception {
-        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("1", "1")
+        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("batman", "batman")
                 .getForObject("/user/following", List.class);
         assertEquals(5, result.size());
         assertEquals(8, result.get(0).get("id"));
@@ -71,9 +71,9 @@ public class PersonControllerTest {
      */
     @Test
     public void testStartFollowingAPersonFaliureScenario() throws Exception {
-        MultiValueMap<String, Integer> params = new LinkedMultiValueMap<>();
-        params.set("personToBeFollowed", 6);
-        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("9", "9").
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.set("personToBeFollowed", "profx");
+        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("ironman", "ironman").
                 postForEntity("/user/followPerson", params, Object.class);
         assertEquals(200, 200);
         HashMap<String, String> status = new LinkedHashMap<>();
@@ -89,9 +89,9 @@ public class PersonControllerTest {
      */
     @Test
     public void testStartUnFollowAPersonSuccessScenario() throws Exception {
-        MultiValueMap<String, Integer> params = new LinkedMultiValueMap<>();
-        params.set("personToBeUnFollowed", 6);
-        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("9", "9").
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.set("personToBeUnFollowed", "alfred");
+        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("ironman", "ironman").
                 postForEntity("/user/unfollowPerson", params, Object.class);
         assertEquals(200, 200);
         HashMap<String, String> status = new LinkedHashMap<>();
@@ -107,9 +107,9 @@ public class PersonControllerTest {
      */
     @Test
     public void testStartFollowingAPersonSuccessScenario() throws Exception {
-        MultiValueMap<String, Integer> params = new LinkedMultiValueMap<>();
-        params.set("personToBeFollowed", 6);
-        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("9", "9").
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.set("personToBeFollowed", "dococ");
+        ResponseEntity<Object> result = testRestTemplate.withBasicAuth("ironman", "ironman").
                 postForEntity("/user/followPerson", params, Object.class);
         assertEquals(200, 200);
         HashMap<String, String> status = new LinkedHashMap<>();
@@ -125,7 +125,7 @@ public class PersonControllerTest {
      */
     @Test
     public void mostPopularFollower() throws Exception {
-        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("1", "1")
+        List<Map<String, Object>> result = testRestTemplate.withBasicAuth("batman", "batman")
                 .getForObject("/user/mostPopularFollower", List.class);
         assertEquals(18, result.size());
         assertEquals(10, result.get(0).get("person_id"));

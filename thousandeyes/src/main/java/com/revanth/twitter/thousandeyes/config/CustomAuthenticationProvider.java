@@ -1,7 +1,6 @@
 package com.revanth.twitter.thousandeyes.config;
 
 import com.revanth.twitter.thousandeyes.entity.Person;
-import com.revanth.twitter.thousandeyes.exception.CustomException;
 import com.revanth.twitter.thousandeyes.service.PersonService;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
- * Class for basic authentication for users.
  * Created by Revanth on 6/2/2017.
  */
 @Component
@@ -48,17 +46,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = null;
         if (password.equals(userName)) {
-            Integer id = Integer.parseInt(userName, 10);
             try {
-                Person p = personService.getPersonById(id);
+                Person p = personService.getPersonByHandle(userName);
                 if (p == null) {
                     throw new BadCredentialsException("Please check your credentials ");
                 }
                 usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(p, password, Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
-            } catch (CustomException exception) {
+            } catch (Exception exception) {
                 LOGGER.log(Level.INFO, exception);
             }
-
         }
         return usernamePasswordAuthenticationToken;
     }

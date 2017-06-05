@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Revanth on 5/29/2017.
  */
 @Service
-public class PersonServiceServiceImpl implements PersonService {
+public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonRepository personRepository;
@@ -82,10 +82,19 @@ public class PersonServiceServiceImpl implements PersonService {
      * {@inheritDoc}
      */
     @Override
-    public int shortestDistanceBetweenTwoPersons(@NotNull int source, @NotNull int destination) throws CustomException {
-        Person sourcePerson = getPersonById(source);
-        Person destinationPerson = getPersonById(destination);
+    public int shortestDistanceBetweenTwoPersons(@NotNull String source, @NotNull String destination) throws CustomException {
+        Person sourcePerson = getPersonByHandle(source);
+        Person destinationPerson = getPersonByHandle(destination);
         return personRepository.shortestDistanceBetweenTwoPersons(sourcePerson, destinationPerson);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Person getPersonByHandle(@NotNull String handle) throws CustomException {
+        return personRepository.getPersonByHandle(handle);
+    }
+
 
 }

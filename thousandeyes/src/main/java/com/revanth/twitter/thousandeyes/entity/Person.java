@@ -36,9 +36,10 @@ public class Person {
         return handle;
     }
 
-    void setHandle(String handle) {
+    public void setHandle(String handle) {
         this.handle = handle;
     }
+
 
     public int getId() {
         return id;
@@ -48,8 +49,9 @@ public class Person {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
+
 
 }

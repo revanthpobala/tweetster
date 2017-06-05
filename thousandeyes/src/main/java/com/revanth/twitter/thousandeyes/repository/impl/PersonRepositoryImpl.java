@@ -96,13 +96,15 @@ public class PersonRepositoryImpl implements PersonRepository {
      */
     @Override
     public Person getPersonByHandle(String handle) throws CustomException {
-        Person person = null;
         try {
-            person = db.query(FIND_PERSON_BY_HANDLE + handle + "' ", new BeanPropertyRowMapper<Person>(Person.class)).get(0);
+            List<Person> person = db.query(FIND_PERSON_BY_HANDLE + handle + "' ", new BeanPropertyRowMapper<Person>(Person.class));
+            if (person.size() == 1) {
+                return person.get(0);
+            }
         } catch (DataAccessException exception) {
             throw new CustomException(exception.getMessage());
         }
-        return person;
+        return null;
     }
 
     /**

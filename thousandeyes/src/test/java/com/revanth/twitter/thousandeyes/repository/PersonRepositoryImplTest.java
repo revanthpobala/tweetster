@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 public class PersonRepositoryImplTest {
 
     @Autowired
-    private PersonRepository personRepository;
+    PersonRepository personRepository;
 
     @Mock
     private Person mockPerson1;

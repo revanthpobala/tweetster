@@ -72,6 +72,14 @@ public interface PersonService {
      * @return Distance between two persons.
      * @throws CustomException When something is wrong with the database.
      */
-    int shortestDistanceBetweenTwoPersons(int source, int destination) throws CustomException;
+    int shortestDistanceBetweenTwoPersons(String source, String destination) throws CustomException;
 
+    /**
+     * Get the Person data based on the handle provided
+     *
+     * @param handle User name of the person
+     * @return Person information
+     * @throws CustomException When something is wrong with the database.
+     */
+    Person getPersonByHandle(String handle) throws CustomException;
 }

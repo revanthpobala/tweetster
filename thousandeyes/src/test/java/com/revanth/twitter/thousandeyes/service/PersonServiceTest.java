@@ -84,7 +84,7 @@ public class PersonServiceTest {
      */
     @Test
     public void shortestDistanceBetweenTwoPersons() throws Exception {
-        int distance = personService.shortestDistanceBetweenTwoPersons(3, 7);
+        int distance = personService.shortestDistanceBetweenTwoPersons("catwoman", "zod");
         assertThat(distance, is(1));
     }
 
