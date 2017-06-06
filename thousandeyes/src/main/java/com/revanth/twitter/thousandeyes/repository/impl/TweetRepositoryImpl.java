@@ -19,7 +19,7 @@ import java.util.List;
 @Repository
 public class TweetRepositoryImpl implements TweetRepository {
 
-    private static String FIND_TWEETS_FROM_A_PERSON = "select * from messages where person_id = ";
+    private static String FIND_TWEETS_FROM_A_PERSON = "SELECT * FROM messages WHERE person_id = :id";
     private static String GET_TWEETS_SENT_AND_RECEIVED_BY_A_PERSON =
             "SELECT t.* FROM messages t JOIN followers f ON t.person_id = f.person_id WHERE f.follower_person_id = :id  " +
                     "UNION ALL SELECT * FROM messages WHERE person_id = :id  ORDER BY id DESC";
@@ -59,7 +59,9 @@ public class TweetRepositoryImpl implements TweetRepository {
     @Override
     public List<Tweet> getTweetsFromCurrentPerson(Person person) throws CustomException {
         try {
-            List<Tweet> tweetsFromPerson = db.query(FIND_TWEETS_FROM_A_PERSON + " " + person.getId(), new BeanPropertyRowMapper<Tweet>(Tweet.class));
+            HashMap<String, Integer> sqlParameters = new HashMap<>();
+            sqlParameters.put("id", person.getId());
+            List<Tweet> tweetsFromPerson = db.query(FIND_TWEETS_FROM_A_PERSON, sqlParameters, new BeanPropertyRowMapper<Tweet>(Tweet.class));
             return tweetsFromPerson;
         } catch (DataAccessException exception) {
             throw new CustomException(exception.getMessage());

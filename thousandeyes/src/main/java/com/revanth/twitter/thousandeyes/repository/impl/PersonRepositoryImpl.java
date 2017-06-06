@@ -25,11 +25,11 @@ import java.util.*;
 public class PersonRepositoryImpl implements PersonRepository {
 
 
-    private static final String FIND_PERSON_BY_HANDLE = "SELECT * FROM PEOPLE where handle = '";
-    private static final String FIND_PERSON_BY_NAME = "SELECT * FROM PEOPLE where name = '";
+    private static final String FIND_PERSON_BY_HANDLE = "SELECT * FROM PEOPLE WHERE handle = :handle";
+    private static final String FIND_PERSON_BY_NAME = "SELECT * FROM PEOPLE WHERE name = :name";
     private static final String FOLLOW_A_PERSON = "INSERT INTO followers (person_id, follower_person_id) VALUES (:person_id, :follower_person_id)";
     private static final String GET_ALL_PERSONS_SQL = "SELECT * FROM people";
-    private static final String GET_FOLLOWEES_OF_A_PERSON = "select p.* from people p join followers f on p.id = f.person_id where f.follower_person_id = ";
+    private static final String GET_FOLLOWEES_OF_A_PERSON = "SELECT p.* FROM people p JOIN followers f ON p.id = f.person_id WHERE f.follower_person_id = :person_id ";
     private static final String GET_FOLLOWERS_OF_A_PERSON = "select p.* from PEOPLE p join FOLLOWERS f on p.id = f.follower_person_id where f.person_id = ";
     private static final String GET_MOST_POPULAR_PERSON = "SELECT p.id, p.person_id, p.follower_person_id, p.cnt FROM  \n" +
             "     (SELECT t1.id, t1.person_id, t1.follower_person_id, t2.cnt FROM  \n" +
@@ -39,7 +39,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             "     JOIN (SELECT person_id, COUNT(*) AS cnt FROM followers GROUP BY person_id ) AS t2 \n" +
             "     ON t1.follower_person_id = t2.person_id) GROUP BY person_id) AS q  \n" +
             "     ON p.person_id = q.person_id AND p.cnt = q.maxcnt";
-    private static final String GET_PERSON_BY_ID = "SELECT * FROM people WHERE id = ";
+    private static final String GET_PERSON_BY_ID = "SELECT * FROM people WHERE id = :id";
     private static final String IS_FOLLOWING = "SELECT * FROM followers WHERE follower_person_id = :followedPerson AND person_id = :currentPerson";
     private static final String MAP_FOLLOWERS_TABLE = "SELECT * FROM followers";
     private static final String UN_FOLLOW_A_PERSON = "DELETE FROM followers WHERE person_id = :person_id AND follower_person_id = :follower_person_id";
@@ -70,7 +70,9 @@ public class PersonRepositoryImpl implements PersonRepository {
     public List<Person> getPersonById(int id) throws CustomException {
         List<Person> result = null;
         try {
-            result = db.query(GET_PERSON_BY_ID + id, new BeanPropertyRowMapper<Person>(Person.class));
+            HashMap<String, Integer> sqlParameters = new HashMap<>();
+            sqlParameters.put("id", id);
+            result = db.query(GET_PERSON_BY_ID, sqlParameters, new BeanPropertyRowMapper<Person>(Person.class));
         } catch (DataAccessException exception) {
             throw new CustomException(exception.getMessage());
         }
@@ -84,7 +86,9 @@ public class PersonRepositoryImpl implements PersonRepository {
     public List<Person> getPersonByName(String name) throws CustomException {
         List<Person> persons = null;
         try {
-            persons = db.query(FIND_PERSON_BY_NAME + name + "' ", new BeanPropertyRowMapper<Person>(Person.class));
+            HashMap<String, String> sqlParameters = new HashMap<>();
+            sqlParameters.put("name", name);
+            persons = db.query(FIND_PERSON_BY_NAME, sqlParameters, new BeanPropertyRowMapper<Person>(Person.class));
         } catch (DataAccessException exception) {
             throw new CustomException(exception.getMessage());
         }
@@ -97,7 +101,9 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Override
     public Person getPersonByHandle(String handle) throws CustomException {
         try {
-            List<Person> person = db.query(FIND_PERSON_BY_HANDLE + handle + "' ", new BeanPropertyRowMapper<Person>(Person.class));
+            HashMap<String, String> sqlParameters = new HashMap<>();
+            sqlParameters.put("handle", handle);
+            List<Person> person = db.query(FIND_PERSON_BY_HANDLE, sqlParameters, new BeanPropertyRowMapper<Person>(Person.class));
             if (person.size() == 1) {
                 return person.get(0);
             }
@@ -128,7 +134,9 @@ public class PersonRepositoryImpl implements PersonRepository {
     public List<Person> getFolloweesOfPerson(Person p) throws CustomException {
         List<Person> followees = null;
         try {
-            followees = db.query(GET_FOLLOWEES_OF_A_PERSON + p.getId(), new BeanPropertyRowMapper<Person>(Person.class));
+            HashMap<String, Integer> sqlParameters = new HashMap<>();
+            sqlParameters.put("person_id", p.getId());
+            followees = db.query(GET_FOLLOWEES_OF_A_PERSON, sqlParameters, new BeanPropertyRowMapper<Person>(Person.class));
         } catch (DataAccessException exception) {
             throw new CustomException(exception.getMessage());
         }
