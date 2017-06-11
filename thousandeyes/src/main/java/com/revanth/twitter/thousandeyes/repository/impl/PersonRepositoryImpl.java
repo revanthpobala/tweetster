@@ -236,6 +236,7 @@ public class PersonRepositoryImpl implements PersonRepository {
      *
      * @param followersMap followers table as a list
      * @return graph Graph that is used to do bfs.
+     *          Graph : Key = follower_person_id , Values = Person_id's
      */
     private HashMap<Integer, Set<Integer>> createGraph(List<Map<String, Object>> followersMap) {
         HashMap<Integer, Set<Integer>> graph = new HashMap<>();
@@ -287,7 +288,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                 }
             }
         }
-        return -1;
+        return hops;
     }
 
 }

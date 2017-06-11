@@ -153,7 +153,7 @@ public class PersonRepositoryImplTest {
     @Test
     public void testShortestDistanceBetweenTwoPersons() throws Exception {
         when(mockPerson1.getId()).thenReturn(8);
-        when(mockPerson2.getId()).thenReturn(4);
+        when(mockPerson2.getId()).thenReturn(5);
         assertThat(personRepository.shortestDistanceBetweenTwoPersons(mockPerson1, mockPerson2), is(2));
     }
 
